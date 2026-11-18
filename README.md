@@ -1,5 +1,10 @@
+# Rwanda Seasonal Agricultural Survey 2025 Dashboard
 
-An interactive Streamlit dashboard presenting insights from Rwanda’s 2025 Seasonal Agricultural Survey. The project visualizes agricultural land use, crop production, farm practices, market allocation, economic value, and official NISR survey tables.
+An interactive Streamlit dashboard exploring Rwanda’s 2025 Seasonal Agricultural Survey. The project visualizes agricultural land use, crop production, farm practices, harvest allocation, economic value, and official NISR survey tables.
+
+## Live Demo
+
+Explore the deployed dashboard: [https://vincent-nisr-inforgraphiccompetition.streamlit.app/](https://vincent-nisr-inforgraphiccompetition.streamlit.app/)
 
 ## Features
 
@@ -18,16 +23,6 @@ An interactive Streamlit dashboard presenting insights from Rwanda’s 2025 Seas
 - Plotly
 - OpenPyXL
 - Excel workbook data
-
-## Project Structure
-
-```text
-NISR-Inforgraphic_Competition/
-├── app.py                              # Streamlit dashboard
-├── SAS 2025_Annual Tables.xlsx         # NISR SAS 2025 dataset
-├── requirements.txt                    # Python dependencies
-└── __pycache__/                        # Generated Python cache
-```
 
 ## Getting Started
 
@@ -48,7 +43,7 @@ Activate the virtual environment:
 
 ```bash
 # Linux/macOS
-source .venv/bin/bin/activate
+source .venv/bin/activate
 
 # Windows
 .venv\Scripts\activate
@@ -66,7 +61,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-The application will open in your browser, usually at:
+The application opens in your browser at:
 
 ```text
 http://localhost:8501
@@ -150,5 +145,3 @@ Data source: `SAS 2025_Annual Tables.xlsx`
 This application was developed for the 2026 NISR Infographic Competition under the theme:
 
 **“Feeding the Land of a Thousand Hills”**
-
-
