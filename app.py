@@ -18,7 +18,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-DATA_FILE = "SAS 2025_Annual Tables.xlsx"
+DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "SAS 2025_Annual Tables.xlsx")
 
 
 def render_html(html_str: str):
@@ -30,6 +30,14 @@ def render_html(html_str: str):
         st.html(cleaned)
     else:
         st.markdown(cleaned, unsafe_allow_html=True)
+
+
+def render_plotly(fig):
+    """Renders a Plotly chart across all Streamlit versions (1.30+ and 1.45+)."""
+    try:
+        st.plotly_chart(fig, width="stretch")
+    except TypeError:
+        st.plotly_chart(fig, use_container_width=True)
 
 # --- Competition Design System, Typography & Responsive CSS ---
 st.markdown(
@@ -734,7 +742,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                     )
                 ],
             )
-            st.plotly_chart(fig_donut, width="stretch")
+            render_plotly(fig_donut)
             st.caption("**83.3%** of agricultural land is actively cultivated.")
 
         with sub_tabs[1]:
@@ -794,7 +802,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                 margin=dict(l=10, r=10, t=10, b=10),
                 font=dict(family="Lexend, sans-serif"),
             )
-            st.plotly_chart(fig_sun, width="stretch")
+            render_plotly(fig_sun)
             st.caption("Click any sector to drill down (Arable 83.1% vs Permanent 16.9%).")
 
         with sub_tabs[2]:
@@ -857,7 +865,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                 xaxis=dict(title="Share of District Ag Land (%)", range=[0, 100]),
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
             )
-            st.plotly_chart(fig_stack, width="stretch")
+            render_plotly(fig_stack)
             st.caption("Eastern districts lead in pasture; Western & Northern districts exceed 85% cultivated land.")
 
         with sub_tabs[3]:
@@ -909,7 +917,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                 yaxis_title="Area (k Ha)",
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
             )
-            st.plotly_chart(fig_seas, width="stretch")
+            render_plotly(fig_seas)
             st.caption("Season B expanded agricultural land by **+24,191 Ha** over Season A.")
 
         with sub_tabs[4]:
@@ -931,7 +939,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                 font=dict(family="Lexend, sans-serif"),
                 legend=dict(orientation="v", yanchor="middle", y=0.5, xanchor="left", x=1.02, font=dict(size=10)),
             )
-            st.plotly_chart(fig_macro, width="stretch")
+            render_plotly(fig_macro)
             st.caption("National territory: **2,376,299 Ha** (59.9% agricultural).")
 
     # District Agricultural Intensity Benchmark (Expandable)
@@ -958,7 +966,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                 font=dict(family="Lexend, sans-serif"),
                 xaxis=dict(range=[0, 85], title="% Ag Land"),
             )
-            st.plotly_chart(fig_top, width="stretch")
+            render_plotly(fig_top)
         with d_col2:
             low_districts = districts.sort_values(by="Pct_Ag_Land", ascending=True).head(8)
             fig_low = px.bar(
@@ -980,7 +988,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
                 font=dict(family="Lexend, sans-serif"),
                 xaxis=dict(range=[0, 60], title="% Ag Land"),
             )
-            st.plotly_chart(fig_low, width="stretch")
+            render_plotly(fig_low)
 
     st.markdown("<div style='height:24px;'></div>", unsafe_allow_html=True)
 
@@ -1016,7 +1024,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
             margin=dict(l=20, r=20, t=50, b=30),
         )
-        st.plotly_chart(fig_inputs, width="stretch")
+        render_plotly(fig_inputs)
 
     with c2_right:
         # Climate Resilience: Irrigation & Anti-Erosion
@@ -1035,7 +1043,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
             margin=dict(l=20, r=20, t=50, b=30),
         )
-        st.plotly_chart(fig_prac, width="stretch")
+        render_plotly(fig_prac)
 
     st.markdown("<div style='height:24px;'></div>", unsafe_allow_html=True)
 
@@ -1087,7 +1095,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         margin=dict(l=20, r=40, t=50, b=30),
     )
-    st.plotly_chart(fig_prod, width="stretch")
+    render_plotly(fig_prod)
 
     st.markdown("<div style='height:24px;'></div>", unsafe_allow_html=True)
 
@@ -1134,7 +1142,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
             legend=dict(orientation="h", yanchor="bottom", y=1.06, xanchor="right", x=1),
             margin=dict(l=20, r=20, t=65, b=30),
         )
-        st.plotly_chart(fig_u, width="stretch")
+        render_plotly(fig_u)
 
     with c4_right:
         render_html(
@@ -1210,7 +1218,7 @@ def render_data_story(cult, prod, yld, inputs_df, prac_df, gva, usage, districts
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         margin=dict(l=20, r=20, t=50, b=30),
     )
-    st.plotly_chart(fig_gva, width="stretch")
+    render_plotly(fig_gva)
 
 
 # --- TAB 2: THE OFFICIAL STATIC INFOGRAPHIC POSTER ---
@@ -1461,7 +1469,7 @@ def render_simulator_and_explorer(usage, districts):
             margin=dict(l=10, r=10, t=10, b=10),
             font=dict(family="Lexend, sans-serif"),
         )
-        st.plotly_chart(fig_sim_pie, width="stretch")
+        render_plotly(fig_sim_pie)
 
     with c_dist:
         render_html(
@@ -1510,7 +1518,7 @@ def render_simulator_and_explorer(usage, districts):
             template="plotly_white",
             font=dict(family="Lexend, sans-serif"),
         )
-        st.plotly_chart(fig_d_bar, width="stretch")
+        render_plotly(fig_d_bar)
 
 
 # --- SURVEY TABLE PARSER & CACHE ---
@@ -1810,7 +1818,7 @@ def render_survey_tables_and_metadata(sheet_options):
                     coloraxis_showscale=False,
                 )
                 fig_t.update_traces(marker_line_color="rgb(0, 92, 171)", marker_line_width=1)
-                st.plotly_chart(fig_t, width="stretch")
+                render_plotly(fig_t)
 
     # 5. Column configuration for beautiful numbers
     col_configs = {}
@@ -1828,12 +1836,20 @@ def render_survey_tables_and_metadata(sheet_options):
                 col_configs[col] = st.column_config.TextColumn(col, help="Primary Category / District / Crop")
 
     # 6. Render the data table with clean dimensions
-    st.dataframe(
-        display_df,
-        column_config=col_configs,
-        width="stretch",
-        height=480,
-    )
+    try:
+        st.dataframe(
+            display_df,
+            column_config=col_configs,
+            width="stretch",
+            height=480,
+        )
+    except TypeError:
+        st.dataframe(
+            display_df,
+            column_config=col_configs,
+            use_container_width=True,
+            height=480,
+        )
 
     # 7. Footers & Official Notes
     if footers:
