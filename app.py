@@ -95,6 +95,10 @@ st.markdown(
         box-shadow: 0 4px 14px rgba(0, 92, 171, 0.12) !important;
         font-weight: 700 !important;
     }
+    .stTabs [data-baseweb="tab-highlight"],
+    .stTabs [data-baseweb="tab-border"] {
+        display: none !important;
+    }
 
     /* Hero Banner */
     .hero-container {
